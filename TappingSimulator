@@ -101,7 +101,7 @@ AutoFarm:AddToggle({ --AutoRebirth
 })
 
 AutoFarm:AddDropdown({ --Dropdown For AutoRebirth
-	Name = "AutoRebirth Number (Doesnt Really Matter)",
+	Name = "AutoRebirth Number",
 	Default = "1",
 	Options = {"1", "5", "10", "20", "100", "500", "2000", "4000", "8000", "13500", "32000", "62500", "108000", "171500", "256000", "364500", "500000", "1000000"},
 	Callback = function(Value)
@@ -166,7 +166,7 @@ Eggs:AddToggle({ --AutoHatch
 Eggs:AddDropdown({ --Dropdown For Selecting A Egg To Hatch
 	Name = "What Egg To Hatch",
 	Default = "Starter",
-	Options = {"Starter", "Wood Egg", "Jungle Egg", "Forest Egg", "Swamp Egg", "Snow Egg", "Desert Egg", "Death Egg", "Beach Egg", "45M Egg"},
+	Options = {"Starter", "Wood Egg", "Jungle Egg", "Forest Egg", "Swamp Egg", "Snow Egg", "Desert Egg", "Death Egg", "Beach Egg", "Mine Egg", "Cloud Egg", "Coral Egg", "Dark Egg", "Fire Egg", "Underworld Egg", "Molten Egg", "45M Egg"},
 	Callback = function(Value)
 		getgenv().SelectEggToHatch = Value
 	end  
@@ -178,6 +178,8 @@ local Teleport_Areas = Window:MakeTab({
 	Icon = "rbxassetid://282021040",
 	PremiumOnly = false
 })
+
+Teleport_Areas:AddLabel("NOTE: If you want to change the version of your coins you\n must go through the portal")
 
 Teleport_Areas:AddButton({
 	Name = "Greenlands / +0% World Boost",
