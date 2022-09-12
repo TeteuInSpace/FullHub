@@ -103,7 +103,7 @@ AutoFarm:AddToggle({ --AutoRebirth
 AutoFarm:AddDropdown({ --Dropdown For AutoRebirth
 	Name = "AutoRebirth Number (Doesnt Really Matter)",
 	Default = "1",
-	Options = {"1", "5", "10", "20", "100", "500", "2000", "4000", "8000", "13500", "32000", "62500", "108000", "171500", "256000", "364500", "500000"},
+	Options = {"1", "5", "10", "20", "100", "500", "2000", "4000", "8000", "13500", "32000", "62500", "108000", "171500", "256000", "364500", "500000", "1000000"},
 	Callback = function(Value)
 		getgenv().SelectRebirthNumber = Value
 	end    
