@@ -1,0 +1,220 @@
+--[ Zombie Attack]
+if game.placeId == 1240123653 or 1632210982 then
+    local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+    local Window = OrionLib:MakeWindow({Name = "Zombie Attack", HidePremium = true, IntroIcon = "rbxassetid://125475595", IntroText = " Teteu | Zombie Attack", SaveConfig = true, ConfigFolder = "Zombie Attack"})
+
+-- [Values]
+_G.farm2 = true
+getgenv().AutoEquipWeapon = true
+
+-- [Functions]
+function farm2()
+    while _G.farm2 == true do
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TeteuInSpace/ScriptsForHub/main/Zombie%20Attack%20Autofarm"))()
+    end
+end
+
+function AutoEquipWeapon()
+    while getgenv().AutoEquipWeapon == true do
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TeteuInSpace/ScriptsForHub/main/ZombieAttackAutoEquip"))()
+    end
+end
+	
+-- [Cashapp Plug]
+OrionLib:MakeNotification({
+	Name = "Loaded Zombie Attack",
+	Content = "Make Love To Teteu By Cashapping Me! $TeteuInSpace",
+	Image = "rbxassetid://2691749281",
+	Time = 10
+})
+
+-- [Autofarm]
+
+local AutoFarm = Window:MakeTab({
+	Name = "AutoFarm",
+	Icon = "rbxassetid://10162233846",
+	PremiumOnly = false
+})
+
+AutoFarm:AddLabel("AutoFarms")
+
+AutoFarm:AddToggle({
+	Name = "Auto Kill Zombies (Disabling Is Glitchy)",
+	Default = false,
+	Callback = function(Value)
+		_G.farm2 = Value
+		farm2()
+	end    
+})
+
+AutoFarm:AddToggle({
+	Name = "AutoEquip Weapon",
+	Default = false,
+	Callback = function(Value)
+		getgenv().AutoEquipWeapon = Value
+		AutoEquipWeapon()
+	end    
+})
+
+local Character = Window:MakeTab({
+	Name = "Character",
+	Icon = "rbxassetid://7937261481",
+	PremiumOnly = false
+})
+
+Character:AddTextbox({
+	Name = "Walkspeed / 16 Default For This Game",
+	Default = "16",
+	TextDisappear = true,
+	Callback = function(Value)
+		while wait(0.0001) do
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+		end
+	end	  
+})
+
+Character:AddTextbox({
+	Name = "JumpPower / 50 Default For This Game",
+	Default = "50",
+	TextDisappear = true,
+	Callback = function(Value)
+		while wait(0.0001) do
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+		end
+	end	  
+})
+
+Character:AddButton({
+	Name = "Toggle Fly (B)",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TeteuInSpace/ScriptsForHub/main/Fly"))()
+    end
+})
+
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://10652477578",
+	PremiumOnly = false
+})
+
+Misc:AddLabel("NOTE: Knifes And Gun Do Not Deal Damage And Only Work Once")
+
+Misc:AddButton({
+	Name = "Give All Knifes (Glitchy)",
+	Callback = function()
+        for _,Thing in pairs(game.ReplicatedStorage.Knives:GetChildren()) do
+            if Thing:IsA("Tool") then
+            Thing.Parent = game.Players.LocalPlayer.Backpack
+            end
+            end
+  	end    
+})
+
+Misc:AddButton({
+	Name = "Give All Guns (Glitchy)",
+	Callback = function()
+        for _,Thing in pairs(game.ReplicatedStorage.Guns:GetChildren()) do
+            if Thing:IsA("Tool") then
+            Thing.Parent = game.Players.LocalPlayer.Backpack
+            end
+            end
+        end  
+})
+
+Misc:AddButton({
+	Name = "Anti-Afk (Credit To Warn)",
+	Callback = function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/sDXcYFhR", true))()
+	end
+})
+
+Misc:AddButton({
+	Name = "ServerHop / Finds Lowest Server Count",
+	Callback = function()
+		local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+Teleport()
+	end
+})
+
+Misc:AddButton({
+	Name = "Rejoin",
+	Callback = function()
+		local ts = game:GetService("TeleportService")
+
+		local p = game:GetService("Players").LocalPlayer
+
+ 
+
+		ts:Teleport(game.PlaceId, p)
+	end
+})
+
+end
+OrionLib.Init()
